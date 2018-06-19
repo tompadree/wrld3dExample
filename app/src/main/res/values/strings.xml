@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">WRLDTest</string>
+
+    <string name="eegeo_api_key">961c5e528fc42dcf39733ddd04a964ad</string>
+</resources>
