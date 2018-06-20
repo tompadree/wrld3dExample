@@ -2,4 +2,22 @@
     <string name="app_name">WRLDTest</string>
 
     <string name="eegeo_api_key">961c5e528fc42dcf39733ddd04a964ad</string>
+
+
+
+    <!--Indoor-->
+    <string name="exit_button_label">Exit</string>
+    <string name="enter_button_label">Enter</string>
+    <string name="moveup_button_label">Move Up</string>
+    <string name="movedown_button_label">Move Down</string>
+    <string name="topfloor_button_label">Top Floor</string>
+    <string name="bottomfloor_button_label">Bottom Floor</string>
+    <string name="map_colllapse_button_label">Collapse</string>
+
+    <string name="default_start_lat">37.769868</string>
+    <string name="default_start_lon">-122.466106</string>
+    <string name="default_start_zoom">16</string>
+
+    <string name="indoor_start_lat">37.769868</string>
+    <string name="indoor_start_lon">-122.466106</string>
 </resources>
