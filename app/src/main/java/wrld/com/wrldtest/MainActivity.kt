@@ -14,6 +14,7 @@ import com.eegeo.mapapi.markers.MarkerOptions
 import com.eegeo.mapapi.widgets.RouteView
 import com.eegeo.indoors.IndoorMapView
 import android.R.attr.path
+import android.content.Intent
 import android.view.View
 import com.eegeo.mapapi.services.routing.RouteStep
 import com.eegeo.mapapi.services.routing.RouteSection
@@ -28,6 +29,7 @@ import com.eegeo.mapapi.services.routing.OnRoutingQueryCompletedListener
 import android.graphics.Color;
 import android.graphics.Point
 import android.graphics.PointF
+import android.support.v4.graphics.ColorUtils
 import android.widget.Button
 import com.eegeo.mapapi.positioner.PositionerOptions
 import kotlinx.android.synthetic.main.activity_main.*
@@ -35,6 +37,8 @@ import com.eegeo.mapapi.geometry.ElevationMode.HeightAboveGround
 import com.eegeo.mapapi.geometry.LatLngAlt
 import com.eegeo.mapapi.indoors.OnIndoorEnteredListener
 import com.eegeo.mapapi.indoors.OnIndoorExitedListener
+import com.eegeo.mapapi.polygons.Polygon
+import com.eegeo.mapapi.polygons.PolygonOptions
 import com.eegeo.mapapi.positioner.OnPositionerChangedListener
 import com.eegeo.mapapi.positioner.Positioner
 import com.eegeo.ui.util.ViewAnchor
@@ -57,8 +61,8 @@ class MainActivity : AppCompatActivity() {
 
     private var m_indoorMapView: IndoorMapView? = null
     private var m_eegeoMap: EegeoMap? = null
-    private val m_routeViews = ArrayList<RouteView>()
-    private val m_markers = ArrayList<Marker>()
+//    private val m_routeViews = ArrayList<RouteView>()
+    lateinit var m_marker: Marker
     val markerOptions = MarkerOptions()
     private var m_indoors = false
 
@@ -67,12 +71,9 @@ class MainActivity : AppCompatActivity() {
 
         EegeoApi.init(this, getString(R.string.eegeo_api_key))
         setContentView(R.layout.activity_main)
-        m_mapView!!.onCreate(savedInstanceState)
+        m_mapView?.onCreate(savedInstanceState)
 
-        val listener = this
-
-        m_mapView!!.getMapAsync { map ->
-
+        m_mapView?.getMapAsync { map ->
 
             m_eegeoMap = map
 //            m_eegeoMap!!.addOnIndoorEnteredListener(this)
@@ -80,36 +81,39 @@ class MainActivity : AppCompatActivity() {
 
             val buttons = ArrayList<Button>()
 
-            buttons.add(findViewById(R.id.topfloor_indoor_button))
-            buttons.add(findViewById(R.id.moveup_indoor_button));
-            buttons.add(findViewById(R.id.movedown_indoor_button));
-            buttons.add(findViewById(R.id.bottomfloor_indoor_button));
-            buttons.add(findViewById(R.id.move_floor_exit_indoor_button));
+            buttons.add(topfloor_indoor_button)
+            buttons.add(moveup_indoor_button)
+            buttons.add(movedown_indoor_button)
+            buttons.add(bottomfloor_indoor_button)
+            buttons.add(move_floor_exit_indoor_button)
 
-            val indoorEventListener = IndoorEventListener(buttons);
+            golden_gate_button.isEnabled = true
+
+            val indoorEventListener = IndoorEventListener(buttons, topfloor_indoor_buttons, golden_gate_button);
             map.addOnIndoorEnteredListener(indoorEventListener)
             map.addOnIndoorExitedListener(indoorEventListener)
 
             val uiContainer = findViewById<View>(R.id.eegeo_ui_container) as RelativeLayout
             m_indoorMapView = IndoorMapView(m_mapView!!, uiContainer, m_eegeoMap)
-            //markerOptions?.indoor(step.indoorId, step.indoorFloorId)
-//            markerOptions.position(LatLng(37.769868, -122.466106))
-////            markerOptions.indoor("Academy Cafe", 1)
-//            val marker_m = m_eegeoMap!!.addMarker(markerOptions)
-//            m_markers.add(marker_m)
 
-            val numberOfFloors = 4
-            for (floorId in 0 until numberOfFloors) {
-                val marker = m_eegeoMap!!.addMarker(MarkerOptions()
-                        .position(LatLng(37.769868, -122.466106))
-                        .indoor("california_academy_of_sciences", floorId)
-                        .labelText("Marker on floor $floorId"))
+            m_marker = m_eegeoMap!!.addMarker(MarkerOptions()
+                    .position(LatLng(37.769698, -122.466866))
+                    .indoor("california_academy_of_sciences_19794", 0)
+                    .labelText("Academy cafe marker"))
 
-                m_markers.add(marker)
-            }
 
-//            m_eegeoMap.addMarker(markerOptions!!)
 
+//                    val polygon : Polygon = m_eegeoMap!!.addPolygon(PolygonOptions()
+//                            .add(
+//                                     LatLng(37.769698, -122.466866),
+//                                     LatLng(37.769658, -122.466806),
+//                                    LatLng(37.769628, -122.466856),
+//                                    LatLng(37.769618, -122.466786))
+//                            .fillColor(ColorUtils.setAlphaComponent(Color.BLUE, 128))
+//                            .indoor("california_academy_of_sciences_19794", 0));
+                   // m_polygons.add(polygon);
+
+            // m_markers.add(marker)
 
         }
     }
@@ -122,27 +126,42 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        m_mapView!!.onResume()
+
+        m_mapView?.onResume()
+
     }
 
     override fun onPause() {
         super.onPause()
-        m_mapView!!.onPause()
+        m_mapView?.onPause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
         if (m_eegeoMap != null) {
-            for (routeView in m_routeViews) {
-                routeView.removeFromMap()
-            }
-            for (marker in m_markers) {
-                m_eegeoMap!!.removeMarker(marker)
-            }
+//            for (routeView in m_routeViews) {
+//                routeView.removeFromMap()
+//            }
+//            for (marker in m_markers) {
+            m_eegeoMap?.removeMarker(m_marker)
+            //m_marker.destroy()
+
+//            }
         }
 
-        m_mapView!!.onDestroy()
+        m_mapView?.onDestroy()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        finish()
+    }
+
+    fun onGoldenGate(view : View) {
+        startActivity(Intent(this, GoldenGateActivity::class.java))
+      //  finish()
     }
 
     fun onExit(view: View) {
@@ -166,19 +185,25 @@ class MainActivity : AppCompatActivity() {
         m_eegeoMap!!.moveIndoorDown()
     }
 
-    class IndoorEventListener(buttons: List<Button>) : OnIndoorEnteredListener, OnIndoorExitedListener {
+    class IndoorEventListener(buttons: List<Button>, indoor_buttons: RelativeLayout, golden_gate_button : Button) : OnIndoorEnteredListener, OnIndoorExitedListener {
 
         private var m_buttons: List<Button> = buttons // ArrayList()
-//        m_buttons = buttons
+        private var topfloor_indoor_buttons: RelativeLayout = indoor_buttons
+        private var golden_gate_bttn : Button = golden_gate_button
 
         override fun onIndoorEntered() {
             setButtonStates(true)
+            topfloor_indoor_buttons.visibility = View.VISIBLE
+            golden_gate_bttn.visibility = View.GONE
+            golden_gate_bttn.isEnabled = false
         }
 
         override fun onIndoorExited() {
             setButtonStates(false)
+            topfloor_indoor_buttons.visibility = View.GONE
+            golden_gate_bttn.visibility = View.VISIBLE
+            golden_gate_bttn.isEnabled = true
         }
-
 
         fun setButtonStates(state: Boolean) {
             val i: Iterator<Button> = m_buttons.listIterator()
@@ -189,19 +214,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-
-//    inner class IndoorEventListener internal constructor(private val m_button: Button) : OnIndoorEnteredListener, OnIndoorExitedListener {
-//
-//        override fun onIndoorEntered() {
-//            m_indoors = true
-//            m_button.isEnabled = true
-//        }
-//
-//        override fun onIndoorExited() {
-//            m_indoors = false
-//            m_button.isEnabled = false
-//        }
-//    }
 
 }

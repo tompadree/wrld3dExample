@@ -13,11 +13,21 @@
         android:layout_height="fill_parent"
         eegeo:camera_target_latitude="37.769868"
         eegeo:camera_target_longitude="-122.466106"
-        eegeo:camera_zoom="16" />
+        eegeo:camera_zoom="17" />
+
+    <Button
+        android:id="@+id/golden_gate_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:onClick="onGoldenGate"
+        android:text="@string/golden_gate_screen"/>
 
 
     <RelativeLayout
+        android:id="@+id/topfloor_indoor_buttons"
         android:layout_width="fill_parent"
+        android:visibility="gone"
         android:layout_height="fill_parent">
 
         <Button

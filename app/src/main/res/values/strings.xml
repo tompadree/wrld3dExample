@@ -4,7 +4,6 @@
     <string name="eegeo_api_key">961c5e528fc42dcf39733ddd04a964ad</string>
 
 
-
     <!--Indoor-->
     <string name="exit_button_label">Exit</string>
     <string name="enter_button_label">Enter</string>
@@ -20,4 +19,9 @@
 
     <string name="indoor_start_lat">37.769868</string>
     <string name="indoor_start_lon">-122.466106</string>
+
+
+    <!--Golden Gate-->
+    <string name="golden_gate_screen">Golden Gate Screen</string>
+    <string name="casscreen">California Academy Screen</string>
 </resources>

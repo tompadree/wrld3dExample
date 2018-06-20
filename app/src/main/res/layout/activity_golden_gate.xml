@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:eegeo="http://schemas.android.com/apk/res-auto"
+
+    android:layout_height="match_parent"
+    tools:context="wrld.com.wrldtest.GoldenGateActivity">
+
+    <com.eegeo.mapapi.MapView
+        android:id="@+id/m_mapView_gg"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        eegeo:camera_target_latitude="37.818664"
+        eegeo:camera_target_longitude="-122.478428"
+        eegeo:camera_zoom="17" />
+
+    <Button
+        android:id="@+id/golden_gate_button_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:onClick="onGoldenGateBack"
+        android:text="@string/casscreen"/>
+
+</android.support.constraint.ConstraintLayout>
