@@ -2,69 +2,25 @@ package wrld.com.wrldtest
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.eegeo.mapapi.EegeoMap
-import com.eegeo.mapapi.map.OnMapReadyCallback
-import com.eegeo.mapapi.MapView
 import com.eegeo.mapapi.EegeoApi
 import com.eegeo.mapapi.geometry.LatLng
 import com.eegeo.mapapi.markers.Marker
-
 import com.eegeo.mapapi.markers.MarkerOptions
-import com.eegeo.mapapi.widgets.RouteView
 import com.eegeo.indoors.IndoorMapView
-import android.R.attr.path
 import android.content.Intent
 import android.view.View
-import com.eegeo.mapapi.services.routing.RouteStep
-import com.eegeo.mapapi.services.routing.RouteSection
-import com.eegeo.mapapi.widgets.RouteViewOptions
-import com.eegeo.mapapi.services.routing.Route
-import com.eegeo.mapapi.services.routing.RoutingQueryResponse
-import com.eegeo.mapapi.services.routing.RoutingQuery
-import com.eegeo.mapapi.services.routing.RoutingQueryOptions
-import com.eegeo.mapapi.services.routing.RoutingService
 import android.widget.RelativeLayout
-import com.eegeo.mapapi.services.routing.OnRoutingQueryCompletedListener
-import android.graphics.Color;
-import android.graphics.Point
-import android.graphics.PointF
-import android.support.v4.graphics.ColorUtils
 import android.widget.Button
-import com.eegeo.mapapi.positioner.PositionerOptions
 import kotlinx.android.synthetic.main.activity_main.*
-import com.eegeo.mapapi.geometry.ElevationMode.HeightAboveGround
-import com.eegeo.mapapi.geometry.LatLngAlt
 import com.eegeo.mapapi.indoors.OnIndoorEnteredListener
 import com.eegeo.mapapi.indoors.OnIndoorExitedListener
-import com.eegeo.mapapi.polygons.Polygon
-import com.eegeo.mapapi.polygons.PolygonOptions
-import com.eegeo.mapapi.positioner.OnPositionerChangedListener
-import com.eegeo.mapapi.positioner.Positioner
-import com.eegeo.ui.util.ViewAnchor
-
 
 class MainActivity : AppCompatActivity() {
 
-    /*
-    *
-    * EegeoApi.init(this, "961c5e528fc42dcf39733ddd04a964ad")
-
-        markerOptions.position(LatLng(37.769868, -122.466106))
-
-        m_mapView.onCreate(savedInstanceState)
-
-
-        m_eegeoMap?.addMarker(markerOptions)
-    *
-    * */
-
     private var m_indoorMapView: IndoorMapView? = null
     private var m_eegeoMap: EegeoMap? = null
-//    private val m_routeViews = ArrayList<RouteView>()
     lateinit var m_marker: Marker
-    val markerOptions = MarkerOptions()
-    private var m_indoors = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,8 +32,6 @@ class MainActivity : AppCompatActivity() {
         m_mapView?.getMapAsync { map ->
 
             m_eegeoMap = map
-//            m_eegeoMap!!.addOnIndoorEnteredListener(this)
-//            m_eegeoMap!!.addOnIndoorExitedListener(this)
 
             val buttons = ArrayList<Button>()
 
@@ -101,28 +55,8 @@ class MainActivity : AppCompatActivity() {
                     .indoor("california_academy_of_sciences_19794", 0)
                     .labelText("Academy cafe marker"))
 
-
-
-//                    val polygon : Polygon = m_eegeoMap!!.addPolygon(PolygonOptions()
-//                            .add(
-//                                     LatLng(37.769698, -122.466866),
-//                                     LatLng(37.769658, -122.466806),
-//                                    LatLng(37.769628, -122.466856),
-//                                    LatLng(37.769618, -122.466786))
-//                            .fillColor(ColorUtils.setAlphaComponent(Color.BLUE, 128))
-//                            .indoor("california_academy_of_sciences_19794", 0));
-                   // m_polygons.add(polygon);
-
-            // m_markers.add(marker)
-
         }
     }
-
-//    fun onClick(View view) {
-//        if (m_indoors) {
-//            m_eegeoMap.exitIndoorMap();
-//        }
-//    }
 
     override fun onResume() {
         super.onResume()
@@ -140,14 +74,9 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
 
         if (m_eegeoMap != null) {
-//            for (routeView in m_routeViews) {
-//                routeView.removeFromMap()
-//            }
-//            for (marker in m_markers) {
-            m_eegeoMap?.removeMarker(m_marker)
-            //m_marker.destroy()
 
-//            }
+            m_eegeoMap?.removeMarker(m_marker)
+
         }
 
         m_mapView?.onDestroy()

@@ -12,9 +12,9 @@
         android:id="@+id/m_mapView_gg"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        eegeo:camera_target_latitude="37.818664"
-        eegeo:camera_target_longitude="-122.478428"
-        eegeo:camera_zoom="17" />
+        eegeo:camera_target_latitude="37.819130"
+        eegeo:camera_target_longitude="-122.477780"
+        eegeo:camera_zoom="15" />
 
     <Button
         android:id="@+id/golden_gate_button_back"
